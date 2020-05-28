@@ -19,7 +19,14 @@ namespace Task_12
 
         public bool Match_patter()
         {
-            return r.IsMatch(text);
+            MatchCollection m = r.Matches(text);
+            foreach (Match x in m)
+            {
+                Console.WriteLine("Есть\n");
+                return true;
+            }
+            Console.WriteLine("Нет\n");
+            return false;
         }
 
         public void Output_on_display()
