@@ -22,10 +22,10 @@ namespace Task_12
             MatchCollection m = r.Matches(text);
             foreach (Match x in m)
             {
-                Console.WriteLine("Есть\n");
+                Console.WriteLine("Содержит\n\r");
                 return true;
             }
-            Console.WriteLine("Нет\n");
+            Console.WriteLine("Не содержит\n\r");
             return false;
         }
 
@@ -44,6 +44,7 @@ namespace Task_12
                 int l = x.Value.Length;
                 s = s.Remove(i, l);
             }
+            Console.WriteLine(s);
             return s;
         }
 
@@ -76,23 +77,24 @@ namespace Task_12
         }
         public static Regular operator -(Regular re)
         {
-             MatchCollection m = re.R.Matches(re.Text);
-            string s = "";
+            MatchCollection m = re.R.Matches(re.text);
+            string s = re.text;
             foreach (Match x in m)
-                s+=x.Value;
-            re.Text = s;
+            {
+                int i = s.IndexOf(x.Value);
+                int l = x.Value.Length;
+                s = s.Remove(i, l);
+            }
+            re.text = s;
             return re;
-
         }
         public static bool operator false(Regular re)
         {
             return re.text.Length == 0;
-
         }
         public static bool operator true(Regular re)
         {
             return re.text.Length != 0;
-
         }
         public static Regular operator +(Regular re, string s)
         {
@@ -132,7 +134,7 @@ namespace Task_12
     {
         static void Main(string[] args)
         {
-            Regular myReg = new Regular("[^.В!]", "Добрый день. Как Ваше настроение? Всего доброго!");
+            Regular myReg = new Regular("[0 - 2][0 - 9]:[0-6][0-9]", "Мальчик проснулся в 09:05.");
             myReg.Output_on_display();
             Console.WriteLine();
             Console.WriteLine();
@@ -147,11 +149,11 @@ namespace Task_12
             }
             Console.WriteLine();
             Console.WriteLine("ПРЕОБРАЗОВАНИЕ КЛАССА Regex В ТИП string: ");
-            Regular myReg2=Regular.StringToRegular("[67]играю на аккордеоне");
+            Regular myReg2=Regular.StringToRegular("[19:56]играю на аккордеоне");
             Console.WriteLine(myReg2.ToString());
             Console.WriteLine();
             Console.WriteLine("ПРЕОБРАЗОВАНИЕ ТИПА string В КЛАСС Regex:");
-            Regular myReg3 = Regular.StringToRegular("падение вниз");
+            Regular myReg3 = Regular.StringToRegular("0425падение вниз");
             Console.WriteLine();
             Console.WriteLine("ИНДЕКСАТОР, ПОЗВОЛЯЮЩИЙ ПО ИНДЕКСУ 0 ОБРАЩАТЬСЯ К ПОЛЮ r:");
             Console.WriteLine(myReg[0]);
@@ -162,13 +164,13 @@ namespace Task_12
             Console.WriteLine("ДРУГОЕ ЗНАЧЕНИЕ ИНДЕКСА:");
             Console.WriteLine(myReg[6]);
             Console.WriteLine();
-            Console.WriteLine("ОПЕРАЦИЯ БИНАРНОГО +:"); 
+            Console.WriteLine("ОПЕРАЦИЯ БИНАРНОГО +:");
             myReg = myReg + "12345";
             myReg.Output_on_display();
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("ОПЕРАЦИЯ УНАРНОГО -: ");
-            myReg =- myReg;
+            myReg = -myReg;
             myReg.Output_on_display();
             Console.ReadKey();
         }
