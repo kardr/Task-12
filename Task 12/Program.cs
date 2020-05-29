@@ -22,10 +22,8 @@ namespace Task_12
             MatchCollection m = r.Matches(text);
             foreach (Match x in m)
             {
-                Console.WriteLine("Содержит\n\r");
                 return true;
             }
-            Console.WriteLine("Не содержит\n\r");
             return false;
         }
 
@@ -77,15 +75,16 @@ namespace Task_12
         }
         public static Regular operator -(Regular re)
         {
-            MatchCollection m = re.R.Matches(re.text);
-            string s = re.text;
-            foreach (Match x in m)
-            {
-                int i = s.IndexOf(x.Value);
-                int l = x.Value.Length;
-                s = s.Remove(i, l);
-            }
-            re.text = s;
+            MatchCollection m = re.R.Matches(re.text);   
+                string s = re.text;
+                foreach (Match x in m)
+                {
+                    int i = s.IndexOf(x.Value);
+                    int l = x.Value.Length;
+                    s = s.Remove(i, l);
+
+                }
+                re.text = s;
             return re;
         }
         public static bool operator false(Regular re)
@@ -134,7 +133,7 @@ namespace Task_12
     {
         static void Main(string[] args)
         {
-            Regular myReg = new Regular("[0 - 2][0 - 9]:[0-6][0-9]", "Мальчик проснулся в 09:05.");
+            Regular myReg = new Regular("[0 - 2][0 - 9]:[0-6][0-9]", "Мальчик проснулся в 09:59, а должен был в 09:00 .");
             myReg.Output_on_display();
             Console.WriteLine();
             Console.WriteLine();
@@ -149,7 +148,10 @@ namespace Task_12
             }
             Console.WriteLine();
             Console.WriteLine("ПРЕОБРАЗОВАНИЕ КЛАССА Regex В ТИП string: ");
-            Regular myReg2=Regular.StringToRegular("[19:56]играю на аккордеоне");
+            Console.WriteLine(myReg.ToString());
+            Console.WriteLine();
+            Console.WriteLine("ПРЕОБРАЗОВАНИЕ ТИПА string В КЛАСС Regex:");
+            Regular myReg2 = Regular.StringToRegular("[19:56]играю на аккордеоне");
             Console.WriteLine(myReg2.ToString());
             Console.WriteLine();
             Console.WriteLine("ПРЕОБРАЗОВАНИЕ ТИПА string В КЛАСС Regex:");
@@ -172,6 +174,7 @@ namespace Task_12
             Console.WriteLine("ОПЕРАЦИЯ УНАРНОГО -: ");
             myReg = -myReg;
             myReg.Output_on_display();
+            
             Console.ReadKey();
         }
     }
