@@ -70,7 +70,7 @@ namespace Task_12
                     return text;
                 }
                 else
-                    return "Некоректный индекс";
+                    return "Некорректный индекс";
             }
         }
         public static Regular operator -(Regular re)
